@@ -1,0 +1,70 @@
+{% extends 'student/base.html' %}
+{% load static %}
+
+{% block title %}Student Profile{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow border-0 rounded-4 overflow-hidden">
+                
+                <div class="bg-primary p-4 text-center text-white">
+                    <div class="mb-3">
+                        {% if request.user.profile_pic %}
+                            <img src="{{ request.user.profile_pic.url }}" alt="Profile" 
+                                 class="rounded-circle border border-4 border-white shadow" 
+                                 style="width: 120px; height: 120px; object-fit: cover;">
+                        {% else %}
+                            <i class="fas fa-user-circle fa-7x"></i>
+                        {% endif %}
+                    </div>
+                    <h3 class="mb-0 fw-bold">{{ request.user.username }}</h3>
+                    <p class="small opacity-75 mb-0 text-capitalize">{{ request.user.role }} Account</p>
+                </div>
+
+                <div class="card-body p-4">
+                    
+                    <div class="mb-3 border-bottom pb-2">
+                        <label class="text-muted small fw-bold text-uppercase">Full Name</label>
+                        <p class="fs-5 mb-0">{{ request.user.get_full_name|default:request.user.username }}</p>
+                    </div>
+
+                    <!-- <div class="mb-3 border-bottom pb-2">
+                        <label class="text-muted small fw-bold text-uppercase">Roll Number</label>
+                        <p class="fs-5 mb-0 text-primary fw-bold">{{ request.user.roll_number|default:request.user.id }}</p>
+                    </div> -->
+
+                    <div class="mb-3 border-bottom pb-2">
+                        <label class="text-muted small fw-bold text-uppercase">Course</label>
+                        <p class="fs-5 mb-0">{{ request.user.course|default:"Not Assigned" }}</p>
+                    </div>
+
+                    <div class="mb-3 border-bottom pb-2">
+                        <label class="text-muted small fw-bold text-uppercase">Email Address</label>
+                        <p class="fs-5 mb-0">{{ request.user.email }}</p>
+                    </div>
+
+                    <div class="mb-3 border-bottom pb-2">
+                        <label class="text-muted small fw-bold text-uppercase">Date of Birth</label>
+                        <p class="fs-5 mb-0">{{ request.user.date_of_birth|date:"d M, Y"|default:"Not Provided" }}</p>
+                    </div>
+
+                    <div class="mb-0">
+                        <label class="text-muted small fw-bold text-uppercase">Member Since</label>
+                        <p class="fs-5 mb-0 text-success">
+                            {{ request.user.date_joined|date:"M Y" }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card-footer bg-light border-0 p-3 text-center">
+                    <!-- <a href="{% url 'home' %}" class="btn btn-outline-secondary rounded-pill px-4 me-2">Back</a> -->
+                    <a href="{% url 'edits' %}" class="btn btn-primary rounded-pill px-4">Edit Profile</a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

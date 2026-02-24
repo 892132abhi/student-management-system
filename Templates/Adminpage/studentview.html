@@ -1,0 +1,176 @@
+{% extends 'adminpage/adminbase.html' %}
+{% load static %}
+
+{% block title %}Student Profile - {{ students.username }}{% endblock %}
+
+{% block content %}
+<style>
+    .profile-card {
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        overflow: hidden;
+        border: none;
+    }
+
+    .profile-header {
+        background: linear-gradient(135deg, #7b85f2 0%, #5f6af8 100%);
+        padding: 50px 20px;
+        text-align: center;
+        position: relative;
+    }
+
+    .profile-header::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 40px;
+        background: #ffffff;
+        clip-path: ellipse(50% 100% at 50% 100%);
+    }
+
+    .profile-img-container {
+        position: relative;
+        display: inline-block;
+        z-index: 2;
+    }
+
+    .profile-img {
+        width: 140px;
+        height: 140px;
+        object-fit: cover;
+        border: 5px solid #ffffff;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .info-label {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #a0a0a0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .info-value {
+        font-size: 1.1rem;
+        color: #2d3436;
+        font-weight: 600;
+        margin-bottom: 0;
+    }
+
+    .info-box {
+        padding: 15px;
+        border-radius: 12px;
+        background: #fcfcfd;
+        border: 1px solid #f1f3f5;
+        transition: 0.3s;
+    }
+
+    .info-box:hover {
+        background: #ffffff;
+        border-color: #7b85f2;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(123, 133, 242, 0.05);
+    }
+
+    .btn-back {
+        background: #f1f3f9;
+        color: #5f6af8;
+        border: none;
+        font-weight: 600;
+        padding: 12px 30px;
+        border-radius: 12px;
+        transition: 0.3s;
+    }
+
+    .btn-back:hover {
+        background: #5f6af8;
+        color: white;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="profile-card">
+                
+                <div class="profile-header">
+                    <div class="profile-img-container">
+                        {% if students.profile_pic %}
+                            <img src="{{ students.profile_pic.url }}" alt="Profile" class="rounded-circle profile-img">
+                        {% else %}
+                            <div class="rounded-circle profile-img d-flex align-items-center justify-content-center bg-white text-primary">
+                                <i class="fas fa-user fa-4x"></i>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="mt-3 text-white position-relative" style="z-index: 2;">
+                        <h2 class="fw-bold mb-1">{{ students.username }}</h2>
+                        <span class="badge bg-white text-primary px-3 py-2 rounded-pill shadow-sm">
+                            {{ students.role|upper }}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="card-body p-5">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="info-box">
+                                <label class="info-label"><i class="fas fa-id-badge"></i> Full Name</label>
+                                <p class="info-value">{{ request.user.get_full_name|default:students.username }}</p>
+                            </div>
+                        </div>
+
+                        <!-- <div class="col-md-6">
+                            <div class="info-box">
+                                <label class="info-label"><i class="fas fa-fingerprint"></i> Roll Number</label>
+                                <p class="info-value text-primary">#{{ students.id }}</p>
+                            </div>
+                        </div> -->
+
+                        <div class="col-md-6">
+                            <div class="info-box">
+                                <label class="info-label"><i class="fas fa-graduation-cap"></i> Assigned Course</label>
+                                <p class="info-value">{{ students.course|default:"Not Asigned" }}</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="info-box">
+                                <label class="info-label"><i class="fas fa-envelope"></i> Email Address</label>
+                                <p class="info-value" style="font-size: 0.95rem;">{{ students.email }}</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="info-box">
+                                <label class="info-label"><i class="fas fa-calendar-alt"></i> Date of Birth</label>
+                                <p class="info-value">{{ students.date_of_birth|date:"d M, Y"|default:"Not Provided" }}</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="info-box">
+                                <label class="info-label"><i class="fas fa-clock"></i> Enrollment Date</label>
+                                <p class="info-value text-success">{{ students.date_joined|date:"M Y" }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-5">
+                        <a href="{% url 'student_list' %}" class="btn btn-back">
+                            <i class="fas fa-arrow-left me-2"></i> Return to Student List
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'adminpage/adminbase.html' %}
+{% load static %}
+
+{% block title %} Course List {% endblock %}
+
+{% block content %}
+
+<div class="container mt-4 ">
+    <div class="row">
+        {% for course in courses %}
+        <div class="col-md-3 mb-4">
+            <div class="card shadow-sm h-100 " style="border-radius: 20px">
+                {% if course.Course_photo %}
+                    <img class="card-img-top " src="{{ course.Course_photo.url }}" alt="{{ course.Course_name }}" style="height: 180px; object-fit: cover;border-top-left-radius: 20px;border-top-right-radius: 20px;">
+                {% else %}
+                    <img class="card-img-top" src="{% static 'images/default_course.jpg' %}" alt="Default image" style="height: 180px; object-fit: cover;border-top-left-radius: 20px;border-top-right-radius: 20px;">
+                {% endif %}
+
+                <div class="card-body d-flex flex-column ">
+                    <h5 class="card-title fw-bold text-primary">{{ course.Course_name }}</h5>
+                    <p class="card-text text-muted">
+                        {{ course.Course_detail|truncatechars:20}}
+                    </p>
+                    
+                    <div class="mt-auto ">
+                        <p class="mb-1"><strong>Fee: ₹</strong> {{ course.Course_fee }}</p>
+                        <p><strong>Duration:</strong> {{ course.Course_duration }}</p>
+                        <a href="{% url 'edit_course' id=course.id %}" class="btn btn-primary w-100">Edit</a><hr>
+                        <a href="{% url 'course_delete' id=course.id %}" class="btn btn-danger w-100" onclick="return confirm('do you want to delete ? ')">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <h3 class="text-muted">No courses available yet.</h3>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

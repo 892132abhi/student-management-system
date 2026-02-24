@@ -1,0 +1,76 @@
+{% extends 'student/base.html' %}
+{% load static %}
+
+{% block title %} About {% endblock %}
+
+{% block content %}
+<style>
+    .text-indigo { color: #4e73df; }
+    .bg-indigo-light { background-color: #f8f9fc; }
+    .border-indigo { border-color: #4e73df !important; }
+    
+    .hover-lift {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.1) !important;
+    }
+</style>
+
+<div class="ms-5 mt-4 p-5 border-0 bg-indigo-light rounded-4 shadow-sm position-relative overflow-hidden" style="width: 50%;border-radius: 20px;">
+    <div class="position-absolute top-0 end-0 p-3 opacity-10">
+        <i class="bi bi-mortarboard" style="font-size: 10rem;"></i>
+    </div>
+
+    <div class="position-relative" >
+        <h1 class="display-4 fw-black text-dark mb-0">Elevate Your</h1>
+        <h1 class="display-4 fw-black text-indigo mb-3">Learning</h1>
+        <p class="fs-5 text-secondary mb-4" style="max-width: 80%;">
+            Access world-class resources and join a community of lifelong learners today.
+        </p>
+        
+        <div class="d-flex justify-content-start mt-3">
+           <a href="{% url 'course' %}" class="btn btn-indigo bg-primary text-white btn-lg rounded-pill px-5 py-3 shadow-sm fw-bold">
+               Browse Courses <i class="bi bi-arrow-right ms-2"></i>
+           </a>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4 pt-4">
+    <div class="row g-4 justify-content-center">
+        
+        <div class="col-md-3" >
+            <div class="text-center p-4 rounded-4 bg-white border border-light shadow-sm hover-lift h-100" style="border-radius: 20px;">
+                <div class="bg-primary bg-opacity-10 d-inline-block p-3 rounded-circle mb-3">
+                    <i class="bi bi-rocket-takeoff fs-2 text-primary"></i>
+                </div>
+                <h5 class="fw-bold">Our Mission</h5>
+                <p class="small text-muted mb-0">To empower students worldwide through digital innovation.</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="text-center p-4 rounded-4 bg-white border border-light shadow-sm hover-lift h-100"style="border-radius: 20px;">
+                <div class="bg-info bg-opacity-10 d-inline-block p-3 rounded-circle mb-3">
+                    <i class="bi bi-eye fs-2 text-info"></i>
+                </div>
+                <h5 class="fw-bold">Our Vision</h5>
+                <p class="small text-muted mb-0">A future where quality education is accessible to everyone.</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="text-center p-4 rounded-4 bg-white border border-light shadow-sm hover-lift h-100" style="border-radius: 20px;">
+                <div class="bg-danger bg-opacity-10 d-inline-block p-3 rounded-circle mb-3">
+                    <i class="bi bi-heart fs-2 text-danger"></i>
+                </div>
+                <h5 class="fw-bold">Our Values</h5>
+                <p class="small text-muted mb-0">Integrity, community, and the pursuit of excellence.</p>
+            </div>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}

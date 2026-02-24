@@ -1,0 +1,62 @@
+{% extends 'student/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form method="POST" enctype="multipart/form-data" action="{% url 'save_edits' %}">
+                {% csrf_token %}
+                
+                <div class="card shadow border-0 rounded-4 overflow-hidden">
+                    <div class="bg-primary p-4 text-center text-white">
+                        <div class="mb-3">
+                            {% if request.user.profile_pic %}
+                                <img src="{{ request.user.profile_pic.url }}" class="rounded-circle border border-4 border-white shadow" style="width: 120px; height: 120px; object-fit: cover;">
+                            {% else %}
+                                <i class="fas fa-user-circle fa-6x"></i>
+                            {% endif %}
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small">Change Profile Picture</label>
+                            <input type="file" name="profile_pic" class="form-control form-control-sm">
+                        </div>
+                    </div>
+
+                    <div class="card-body p-4">
+                        <div class="mb-3 border-bottom pb-2">
+                            <label class="text-muted small fw-bold text-uppercase">Username</label>
+                            <input type="text" name="username" value="{{ form.username.value|default:request.user.username }}" class="form-control border-0 fs-5" >
+                            <span class="text-danger small">{{ form.username.errors }}</span>
+                        </div>
+
+                        <div class="mb-3 border-bottom pb-2">
+                            <label class="text-muted small fw-bold text-uppercase">Email Address</label>
+                            <input type="email" name="email" value="{{ form.email.value|default:request.user.email }}" class="form-control border-0 fs-5">
+                            <span class="text-danger small">{{ form.email.errors }}</span>
+                        </div>
+
+                        <div class="mb-3 border-bottom pb-2">
+                            <label class="text-muted small fw-bold text-uppercase">Course</label>
+                            <input type="text" name="course" value="{{ form.course.value|default:request.user.course|default:'' }}" class="form-control border-0 fs-5" readonly>
+                        </div>
+
+                        <div class="mb-3 border-bottom pb-2">
+                            <label class="text-muted small fw-bold text-uppercase">Date of Birth</label>
+                            <input type="date" name="date_of_birth" 
+                                   value="{{ form.date_of_birth.value|date:'Y-m-d'|default:request.user.date_of_birth|date:'Y-m-d' }}" 
+                                   max="{% now 'Y-m-d' %}" class="form-control border-0 fs-5">
+                            <span class="text-danger small">{{ form.date_of_birth.errors }}</span>
+                        </div>
+                    </div>
+
+                    <div class="card-footer bg-light border-0 p-3 text-center">
+                        <a href="{% url 'profile' %}" class="btn btn-outline-secondary rounded-pill px-4 me-2">Cancel</a>
+                        <button type="submit" class="btn btn-success rounded-pill px-4">Save Changes</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

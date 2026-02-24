@@ -1,0 +1,74 @@
+{% extends 'adminpage/adminbase.html' %}
+{% block content %}
+<style>
+    .form-container {
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 30px;
+        background: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        border-top: 5px solid #0d6efd; 
+    }
+    .form-label {
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 5px;
+    }
+    .form-control:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    }
+    .btn-submit {
+        background: #0d6efd;
+        color: white;
+        padding: 10px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+    .btn-submit:hover {
+        background: #0b5ed7;
+        transform: translateY(-2px);
+    }
+</style>
+
+<div class="container">
+    <div class="form-container">
+        <h2 class="text-center mb-4" style="color: #0d6efd;">Create New Course</h2>
+        
+        <form method="POST" enctype="multipart/form-data" action="{% url 'add_course' %}">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label class="form-label">Course Name</label>
+                <input type="text" name="Course_name" class="form-control" placeholder="Course Name" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Course Details</label>
+                <textarea name="Course_detail" class="form-control" rows="3" placeholder="Describe the course content"></textarea>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Course Fee</label>
+                    <input type="number" name="Course_fee" class="form-control" placeholder="" step="0.01">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Duration</label>
+                    <input type="text" name="Course_duration" class="form-control" placeholder="3 Months">
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Course Photo</label>
+                <input type="file" name="Course_photo" class="form-control">
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-submit">Save Course</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

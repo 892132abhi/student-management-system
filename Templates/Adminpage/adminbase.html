@@ -1,0 +1,159 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %} SLMS {% endblock %}</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .navbar {
+            background: #ffffff !important; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
+            padding: 15px 0;
+        }
+
+        .navbar-brand-text {
+            font-weight: 700;
+            color: #2d3436;
+            margin-right: 30px;
+        }
+
+        .nav-link {
+            color: #636e72 !important;
+            font-size: 0.95rem;
+            margin: 0 5px;
+            padding: 8px 15px !important;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #7b85f2 !important;
+            background: rgba(123, 133, 242, 0.05);
+            border-radius: 8px;
+        }
+
+        .active-link {
+            color: #7b85f2 !important;
+            border-bottom: 2px solid #7b85f2;
+        }
+
+        .logout-btn {
+            background: #fff0f0;
+            color: #e74c3c !important;
+            border-radius: 8px;
+            padding: 8px 20px !important;
+        }
+
+        .logout-btn:hover {
+            background: #e74c3c;
+            color: white !important;
+        }
+
+        .main-content {
+            min-height: 85vh;
+            padding-bottom: 80px; 
+        }
+
+        footer {
+            background: #ffffff;
+            border-top: 1px solid #eee;
+            color: #888;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-md sticky-top">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'dashboard' %}">
+            <span class="navbar-brand-text fas fa-graduation-cap"> SLMS</span>
+            {% if request.user.is_authenticated %}
+                <span style="font-size: 0.85rem; color: #888; font-weight: 400; border-left: 1px solid #ddd; padding-left: 15px;">
+                    Hi, <b style="color: #7b85f2;">{{ request.user.username }}</b>
+                </span>
+            {% endif %}
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+            <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarMain">
+            {% if request.user.is_authenticated %}
+            <ul class="navbar-nav mx-auto fw-bold">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active-link{% endif %}" href="{% url 'dashboard' %}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'student_list' %}active-link{% endif %}" href="{% url 'student_list' %}">Students</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'course_list' %}active-link{% endif %}" href="{% url 'course_list' %}">Courses</a>
+                </li>
+                
+                {% if request.resolver_match.url_name == 'course_list' %}
+                <li class="nav-item">
+                    <a class="nav-link text-success" href="{% url 'add_course' %}">
+                        <i class="fas fa-plus-circle"></i> Add Course
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+            {% endif %}
+
+            <ul class="navbar-nav ms-auto fw-bold">
+                <li class="nav-item">
+                    {% if request.user.is_authenticated %}
+                    <a class="nav-link logout-btn" href="{% url 'logout' %}" onclick="return confirm('want to Logout')">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                    {% else %}
+                    <a class="nav-link text-primary" href="{% url 'login' %}">Login</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container mt-3">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                <i class="fas fa-info-circle me-2"></i> {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+<div class="main-content">
+    {% block content %}{% endblock %}
+</div>
+
+<footer class="py-3 mt-5">
+    <div class="container text-center text-md-between d-md-flex justify-content-between align-items-center">
+        <p class="mb-0">© 2026 SLMS</p>
+        <div style="font-size: 1.2rem; gap: 15px; display: flex;">
+            <i class="fab fa-facebook text-light-muted"></i>
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-github"></i>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

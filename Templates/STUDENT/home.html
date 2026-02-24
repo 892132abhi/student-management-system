@@ -1,0 +1,86 @@
+{% extends 'student/base.html' %}
+{% load static %}
+
+{% block title %} Home{% endblock %}
+
+{% block content %}
+<style>
+
+    .hover-card {
+         border-radius: 20px;
+        transition: transform 0.3s ease, shadow 0.3s ease;
+    }
+    .hover-card:hover {
+      border-radius: 20px;
+        transform: translateY(-8px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.12) !important;
+    }
+    .hero-gradient {
+      border-radius: 20px;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    }
+</style>
+
+<div class="container-fluid p-4 bg-gray">
+    <div class="hero-gradient shadow-sm border-start border-primary border-5 rounded-5 p-5 mb-4 position-relative overflow-hidden" style="border-radius: 30px;">
+        <div class="position-relative z-index-1">
+            <h1 class="display-6 fw-bold mb-1">Welcome back, <span class="text-primary text-capitalize">{{request.user.username|default:'GUEST'}}!</span></h1>
+            <p class="text-muted fs-5"><span class="fw-bold text-dark"></span>let's decorate your future!</p>
+        </div>
+        <div class="position-absolute bg-primary opacity-10 rounded-circle" style="width: 200px; height: 200px; top: -50px; right: -50px;"></div>
+    </div>
+    <div class="mb-5 ">
+        <div class="rounded-4 shadow-lg overflow-hidden border border-white border-4" style="border-radius: 19px;">
+            <img src="{% static 'image2.jpg' %}" alt="Banner" class="w-100" style="height: 350px; object-fit: cover; filter: brightness(0.9);">
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm rounded-4 hover-card overflow-hidden">
+                <div class="card-header bg-primary py-3 border-0">
+                    <h5 class="text-white mb-0 fw-bold"><i class="bi bi-journal-bookmark-fill me-2"></i>My Curriculum</h5>
+                </div>
+                <div class="card-body p-4">
+                    <p class="text-secondary lh-lg">
+                       It is a platform to manage students, courses, and academic records easily. 
+                       It helps organize data efficiently and keeps information accurate and up to date.
+                    </p>
+                    <hr class="text-muted opacity-25">
+                    <a href="#" class="text-primary fw-bold text-decoration-none small">Explore Catalog <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm rounded-4 hover-card text-center">
+                <div class="card-body d-flex flex-column align-items-center justify-content-center p-5">
+                    <div class="bg-success bg-opacity-10 p-3 rounded-circle mb-3">
+                        <i class="bi bi-people-fill fs-1 text-success"></i>
+                    </div>
+                    <h6 class="text-uppercase tracking-wider text-muted small fw-bold">Total Courses</h6>
+                    <h1 class="display-4 fw-black text-dark mb-0"><span style="color: green; font:italic">{{courses}}</span> Courses</h1>
+                    <span class="badge bg-success-soft text-success mt-2"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm rounded-4 hover-card text-center" style="background: #fdfdfd;">
+                <div class="card-body d-flex flex-column align-items-center justify-content-center p-5">
+                    <div class="bg-info bg-opacity-10 p-3 rounded-circle mb-3">
+                        <i class="bi bi-person-badge fs-1 text-info"></i>
+                    </div>
+                    <h6 class="text-uppercase tracking-wider text-muted small fw-bold">Student Profile</h6>
+                    <p class="text-muted small">Update your bio and preferences</p>
+                    {% if request.user.is_authenticated %}
+                    <a href="{% url 'profile' %}" class="btn btn-info text-white rounded-pill px-5 py-2 fw-bold shadow-sm">View Details</a>
+                    {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-info text-white rounded-pill px-5 py-2 fw-bold shadow-sm">View Details</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
