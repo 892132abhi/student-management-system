@@ -52,7 +52,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'myproject.urls'
+ROOT_URLCONF = os.getenv('ROOT_URLCONF')
 
 TEMPLATES = [
     {
@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'studentdb',
+        'NAME': os.getenv('DATABASE_NAME'),
         'USER': 'postgres',       
         'PASSWORD': os.getenv('DB_PASSWORD'), 
         'HOST': 'localhost',      
@@ -125,7 +125,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS=[
     BASE_DIR/'static'
 ]
-AUTH_USER_MODEL = 'myapp.User'
+AUTH_USER_MODEL = os.getenv('AUTH_USER_MODEL')
 MEDIA_URL='/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
@@ -135,4 +135,4 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv('SMTP_HOST_EMAIL')
 EMAIL_HOST_PASSWORD = os.getenv('SMTP_PASSWORD')  #.env gitignore
-DEFAULT_FROM_EMAIL = 'SLMS<sabhiram41@gmail.com>'
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')

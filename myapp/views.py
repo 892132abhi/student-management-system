@@ -35,7 +35,7 @@ def register_view(request):
         form = RegistrationForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save(commit=False)
-            user.role = 'student' 
+            user.role = 'student'
             user.save()
 
             subject = 'Welcome to SLMS'
