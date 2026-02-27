@@ -8,7 +8,7 @@ def student_required(view_func):
             return redirect('login')
 
         if request.user.role.lower() != 'student':
-            return redirect('home') 
+            return redirect('home')
 
         return view_func(request, *args, **kwargs)
 
